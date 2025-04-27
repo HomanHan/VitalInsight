@@ -55,7 +55,7 @@ public class AppRun {
     }
 
     /**
-     * 访问首页提示
+     * 访问首页 (localhost:8000/) 提示
      * @return /
      */
     @AnonymousGetMapping("/")
