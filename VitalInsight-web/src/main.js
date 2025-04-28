@@ -12,7 +12,7 @@ import dict from './components/Dict'
 // 权限指令
 import checkPer from '@/utils/permission'
 import permission from './components/Permission'
-import './assets/styles/element-variables.scss'
+import './assets/styles/vitalinsight-variables.scss'
 
 // global css
 import './assets/styles/index.scss'

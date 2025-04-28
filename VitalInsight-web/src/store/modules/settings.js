@@ -1,4 +1,4 @@
-import variables from '@/assets/styles/element-variables.scss'
+import variables from '@/assets/styles/vitalinsight-variables.scss'
 import defaultSettings from '@/settings'
 const { tagsView, fixedHeader, sidebarLogo, showFooter, footerTxt, caseNumber } = defaultSettings
 

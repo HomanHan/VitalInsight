@@ -114,7 +114,7 @@ import store from '@/store'
 import { isvalidPhone } from '@/utils/validate'
 import crud from '@/mixins/crud'
 import { editUser } from '@/api/system/user'
-import Avatar from '@/assets/images/avatar.png'
+import Avatar from '@/assets/images/avatar.svg'
 export default {
   name: 'Center',
   components: { updatePass, updateEmail, myUpload },
