@@ -3,18 +3,6 @@
 ### 项目简介
 一个基于 Spring Boot 2.7.18 、 Mybatis-Plus、 JWT、Spring Security、Redis、Vue 的前后端分离的 Web 系统
 
-**开发文档：**  [https://VitalInsight.vip](https://VitalInsight.vip)
-
-**体验地址：**  [https://VitalInsight.vip/demo](https://VitalInsight.vip/demo)
-
-**账号密码：** `admin / 123456`
-
-### 项目源码
-
-| github                                    | gitee                                    |
-| ----------------------------------------- | ---------------------------------------- |
-| https://github.com/elunez/VitalInsight-mp | https://gitee.com/elunez/VitalInsight-mp |
-
 ### Notice ❗️❗️
 
 - 注意修改 `VitalInsight/VitalInsight-system/src/main/resources/config/application-dev-template.yml` 配置文件中的数据库连接信息，然后改名为 `application-dev.yml`
