@@ -13,6 +13,7 @@
         <module>VitalInsight-system</module>
         <module>VitalInsight-tools</module>
         <module>VitalInsight-generator</module>
+        <module>vitalinsight-health</module>
     </modules>
 
     <name>VitalInsight</name>

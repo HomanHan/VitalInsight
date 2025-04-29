@@ -17,6 +17,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.vitalinsight</groupId>
+            <artifactId>VitalInsight-health</artifactId>
+            <version>1.1</version>
+        </dependency>
+
         <!-- 代码生成模块 -->
         <dependency>
             <groupId>com.vitalinsight</groupId>

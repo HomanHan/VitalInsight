@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vitalinsight.mapper.CheckupItemsMapper">
+    <resultMap id="BaseResultMap" type="com.vitalinsight.domain.CheckupItems">
+        <id column="item_id" property="itemId"/>
+        <result column="report_id" property="reportId"/>
+        <result column="item_name" property="itemName"/>
+        <result column="item_value" property="itemValue"/>
+        <result column="reference_range" property="referenceRange"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        item_id, report_id, item_name, item_value, reference_range, created_at, updated_at
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from Checkup_Items
+        <where>
+            <if test="criteria.reportId != null">
+                and report_id = #{criteria.reportId}
+            </if>
+            <if test="criteria.itemName != null">
+                and item_name = #{criteria.itemName}
+            </if>
+            <if test="criteria.itemValue != null">
+                and item_value = #{criteria.itemValue}
+            </if>
+            <if test="criteria.referenceRange != null">
+                and reference_range = #{criteria.referenceRange}
+            </if>
+            <if test="criteria.updatedAt != null and criteria.updatedAt.size() > 0">
+                AND updated_at BETWEEN #{criteria.updatedAt[0]} AND #{criteria.updatedAt[1]}
+            </if>
+        </where>
+        order by item_id desc
+    </select>
+</mapper>
