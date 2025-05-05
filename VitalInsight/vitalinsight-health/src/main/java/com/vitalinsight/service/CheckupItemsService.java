@@ -28,7 +28,7 @@ import com.vitalinsight.utils.PageResult;
 /**
 * @description 服务接口
 * @author VitalInsight Team
-* @date 2025-04-29
+* @date 2025-05-05
 **/
 public interface CheckupItemsService extends IService<CheckupItems> {
 

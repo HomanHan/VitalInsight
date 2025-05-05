@@ -15,26 +15,27 @@
         item_id, report_id, item_name, item_value, reference_range, created_at, updated_at
     </sql>
 
+<!-- 按 criteria.userId 先在 Reports 表中查询相关报告 ID， 再做 Check_Items 的查询-->
     <select id="findAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from Checkup_Items
         <where>
+            report_id in (
+            select report_id
+            from Health_Reports
+            where user_id = #{criteria.userId}
+            )
             <if test="criteria.reportId != null">
                 and report_id = #{criteria.reportId}
             </if>
             <if test="criteria.itemName != null">
                 and item_name = #{criteria.itemName}
             </if>
-            <if test="criteria.itemValue != null">
-                and item_value = #{criteria.itemValue}
-            </if>
-            <if test="criteria.referenceRange != null">
-                and reference_range = #{criteria.referenceRange}
-            </if>
-            <if test="criteria.updatedAt != null and criteria.updatedAt.size() > 0">
-                AND updated_at BETWEEN #{criteria.updatedAt[0]} AND #{criteria.updatedAt[1]}
-            </if>
+            <!-- Uncomment and modify the following if needed -->
+            <!-- <if test="criteria.updatedAt != null and criteria.updatedAt.size() > 0"> -->
+            <!--     AND updated_at BETWEEN #{criteria.updatedAt[0]} AND #{criteria.updatedAt[1]} -->
+            <!-- </if> -->
         </where>
         order by item_id desc
     </select>

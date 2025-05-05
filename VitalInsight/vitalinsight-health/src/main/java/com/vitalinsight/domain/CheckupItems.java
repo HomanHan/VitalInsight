@@ -30,7 +30,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 /**
 * @description /
 * @author VitalInsight Team
-* @date 2025-04-29
+* @date 2025-05-05
 **/
 @Data
 @TableName("Checkup_Items")

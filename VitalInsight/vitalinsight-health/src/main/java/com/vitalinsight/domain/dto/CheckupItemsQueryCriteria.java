@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
 * @author VitalInsight Team
-* @date 2025-04-29
+* @date 2025-05-05
 **/
 @Data
 public class CheckupItemsQueryCriteria{
@@ -39,10 +39,9 @@ public class CheckupItemsQueryCriteria{
     @ApiModelProperty(value = "体检项目名称（如身高、体重）")
     private String itemName;
 
-    @ApiModelProperty(value = "体检项目值（如175 cm）")
-    private String itemValue;
+    // 当前登陆的用户 ID，后续或许可以增加亲友 ID 用以实现亲友关系
+    @ApiModelProperty(value = "查询的用户 ID")
+    private Long userId;
 
-    @ApiModelProperty(value = "正常参考值范围")
-    private String referenceRange;
-    private List<Timestamp> updatedAt;
+//    private List<Timestamp> updatedAt;
 }

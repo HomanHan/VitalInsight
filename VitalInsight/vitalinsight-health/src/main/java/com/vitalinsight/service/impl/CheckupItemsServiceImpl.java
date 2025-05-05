@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vitalinsight.service.CheckupItemsService;
 import com.vitalinsight.domain.dto.CheckupItemsQueryCriteria;
 import com.vitalinsight.mapper.CheckupItemsMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.vitalinsight.utils.PageUtil;
@@ -33,11 +34,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import com.vitalinsight.utils.PageResult;
+import com.vitalinsight.utils.SecurityUtils;
 
 /**
 * @description 服务实现
 * @author VitalInsight Team
-* @date 2025-04-29
+* @date 2025-05-05
 **/
 @Service
 @RequiredArgsConstructor
@@ -47,11 +49,13 @@ public class CheckupItemsServiceImpl extends ServiceImpl<CheckupItemsMapper, Che
 
     @Override
     public PageResult<CheckupItems> queryAll(CheckupItemsQueryCriteria criteria, Page<Object> page){
+        criteria.setUserId(SecurityUtils.getCurrentUserId());
         return PageUtil.toPage(checkupItemsMapper.findAll(criteria, page));
     }
 
     @Override
     public List<CheckupItems> queryAll(CheckupItemsQueryCriteria criteria){
+        criteria.setUserId(SecurityUtils.getCurrentUserId());
         return checkupItemsMapper.findAll(criteria);
     }
 

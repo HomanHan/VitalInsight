@@ -34,7 +34,7 @@ import com.vitalinsight.utils.PageResult;
 
 /**
 * @author VitalInsight Team
-* @date 2025-04-29
+* @date 2025-05-05
 **/
 @RestController
 @RequiredArgsConstructor
@@ -46,12 +46,14 @@ public class CheckupItemsController {
 
     @ApiOperation("导出数据")
     @GetMapping(value = "/download")
+//    @PreAuthorize("@el.check('checkupItems:list')")
     public void exportCheckupItems(HttpServletResponse response, CheckupItemsQueryCriteria criteria) throws IOException {
         checkupItemsService.download(checkupItemsService.queryAll(criteria), response);
     }
 
     @GetMapping
     @ApiOperation("查询view_checkup_items")
+//    @PreAuthorize("@el.check('checkupItems:list')")
     public ResponseEntity<PageResult<CheckupItems>> queryCheckupItems(CheckupItemsQueryCriteria criteria){
         Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(checkupItemsService.queryAll(criteria,page),HttpStatus.OK);
@@ -60,6 +62,7 @@ public class CheckupItemsController {
     @PostMapping
     @Log("新增view_checkup_items")
     @ApiOperation("新增view_checkup_items")
+//    @PreAuthorize("@el.check('checkupItems:add')")
     public ResponseEntity<Object> createCheckupItems(@Validated @RequestBody CheckupItems resources){
         checkupItemsService.create(resources);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -68,6 +71,7 @@ public class CheckupItemsController {
     @PutMapping
     @Log("修改view_checkup_items")
     @ApiOperation("修改view_checkup_items")
+//    @PreAuthorize("@el.check('checkupItems:edit')")
     public ResponseEntity<Object> updateCheckupItems(@Validated @RequestBody CheckupItems resources){
         checkupItemsService.update(resources);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -76,6 +80,7 @@ public class CheckupItemsController {
     @DeleteMapping
     @Log("删除view_checkup_items")
     @ApiOperation("删除view_checkup_items")
+//    @PreAuthorize("@el.check('checkupItems:del')")
     public ResponseEntity<Object> deleteCheckupItems(@ApiParam(value = "传ID数组[]") @RequestBody List<Long> ids) {
         checkupItemsService.deleteAll(ids);
         return new ResponseEntity<>(HttpStatus.OK);

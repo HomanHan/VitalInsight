@@ -4,31 +4,27 @@
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
         <!-- 搜索 -->
-        <label class="el-form-item-label">体检报告ID（外键，关联体检报告表）</label>
-        <el-input v-model="query.reportId" clearable placeholder="体检报告ID（外键，关联体检报告表）" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <label class="el-form-item-label">体检报告 ID</label>
+        <el-input v-model="query.reportId" clearable placeholder="体检报告 ID" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">体检项目名称（如身高、体重）</label>
-        <el-input v-model="query.itemName" clearable placeholder="体检项目名称（如身高、体重）" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <label class="el-form-item-label">体检项目值（如175 cm）</label>
-        <el-input v-model="query.itemValue" clearable placeholder="体检项目值（如175 cm）" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <label class="el-form-item-label">正常参考值范围</label>
-        <el-input v-model="query.referenceRange" clearable placeholder="正常参考值范围" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <date-range-picker
-          v-model="query.updatedAt"
-          start-placeholder="updatedAtStart"
-          end-placeholder="updatedAtStart"
-          class="date-item"
-        />
+        <el-input v-model="query.itemName" clearable placeholder="如身高、体重" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <!--        <date-range-picker-->
+        <!--          v-model="query.updatedAt"-->
+        <!--          start-placeholder="updatedAtStart"-->
+        <!--          end-placeholder="updatedAtStart"-->
+        <!--          class="date-item"-->
+        <!--        />-->
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
-      <crudOperation :permission="permission" />
+      <crudOperation />
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
-        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-          <el-form-item label="体检报告ID（外键，关联体检报告表）" prop="reportId">
-            <el-input v-model="form.reportId" style="width: 370px;" />
+        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="120px">
+          <el-form-item label="体检报告 ID" prop="reportId">
+            <el-input v-model="form.reportId" style="width: 330px;" />
           </el-form-item>
-          <el-form-item label="体检项目名称（如身高、体重）" prop="itemName">
+          <el-form-item label="体检项目名称" prop="itemName">
             <el-select v-model="form.itemName" filterable placeholder="请选择">
               <el-option
                 v-for="item in dict.体检项目"
@@ -38,14 +34,14 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="体检项目值（如175 cm）" prop="itemValue">
-            <el-input v-model="form.itemValue" style="width: 370px;" />
+          <el-form-item label="体检项目值" prop="itemValue">
+            <el-input v-model="form.itemValue" style="width: 330px;" />
           </el-form-item>
-          <el-form-item label="正常参考值范围" prop="referenceRange">
-            <el-input v-model="form.referenceRange" style="width: 370px;" />
+          <el-form-item label="参考范围" prop="referenceRange">
+            <el-input v-model="form.referenceRange" style="width: 330px;" />
           </el-form-item>
-          <el-form-item label="记录最后更新时间">
-            <el-date-picker v-model="form.updatedAt" type="datetime" style="width: 370px;" />
+          <el-form-item label="更新时间">
+            <el-date-picker v-model="form.updatedAt" type="datetime" style="width: 330px;" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -56,20 +52,19 @@
       <!--表格渲染-->
       <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="reportId" label="体检报告ID（外键，关联体检报告表）" />
-        <el-table-column prop="itemName" label="体检项目名称（如身高、体重）">
+        <el-table-column prop="reportId" label="体检报告" />
+        <el-table-column prop="itemName" label="体检项目">
           <template slot-scope="scope">
             {{ dict.label.体检项目[scope.row.itemName] }}
           </template>
         </el-table-column>
-        <el-table-column prop="itemValue" label="体检项目值（如175 cm）" />
-        <el-table-column prop="referenceRange" label="正常参考值范围" />
-        <el-table-column prop="updatedAt" label="记录最后更新时间" />
-        <el-table-column v-if="checkPer(['admin','checkupItems:edit','checkupItems:del'])" label="操作" width="150px" align="center">
+        <el-table-column prop="itemValue" label="体检结果" />
+        <el-table-column prop="referenceRange" label="参考范围" />
+        <el-table-column prop="updatedAt" label="最后更新时间" />
+        <el-table-column label="操作" width="150px" align="center">
           <template slot-scope="scope">
             <udOperation
               :data="scope.row"
-              :permission="permission"
             />
           </template>
         </el-table-column>
@@ -95,34 +90,27 @@ export default {
   mixins: [presenter(), header(), form(defaultForm), crud()],
   dicts: ['体检项目'],
   cruds() {
-    return CRUD({ title: 'view_checkup_items', url: 'api/checkupItems', idField: 'itemId', sort: 'itemId,desc', crudMethod: { ...crudCheckupItems }})
+    return CRUD({ title: '体检记录', url: 'api/checkupItems', idField: 'itemId', sort: 'itemId,desc', crudMethod: { ...crudCheckupItems }})
   },
   data() {
     return {
-      permission: {
-        add: ['admin', 'checkupItems:add'],
-        edit: ['admin', 'checkupItems:edit'],
-        del: ['admin', 'checkupItems:del']
-      },
       rules: {
         reportId: [
-          { required: true, message: '体检报告ID（外键，关联体检报告表）不能为空', trigger: 'blur' }
+          { required: true, message: '体检报告 ID 不能为空', trigger: 'blur' }
         ],
         itemName: [
-          { required: true, message: '体检项目名称（如身高、体重）不能为空', trigger: 'blur' }
+          { required: true, message: '体检项目名称不能为空', trigger: 'blur' }
         ],
         itemValue: [
-          { required: true, message: '体检项目值（如175 cm）不能为空', trigger: 'blur' }
+          { required: true, message: '体检项目值不能为空', trigger: 'blur' }
         ],
         referenceRange: [
-          { required: true, message: '正常参考值范围不能为空', trigger: 'blur' }
+          { required: true, message: '参考范围不能为空', trigger: 'blur' }
         ]
       },
       queryTypeOptions: [
-        { key: 'reportId', display_name: '体检报告ID（外键，关联体检报告表）' },
-        { key: 'itemName', display_name: '体检项目名称（如身高、体重）' },
-        { key: 'itemValue', display_name: '体检项目值（如175 cm）' },
-        { key: 'referenceRange', display_name: '正常参考值范围' }
+        { key: 'reportId', display_name: '体检报告 ID' },
+        { key: 'itemName', display_name: '如身高、体重' }
       ]
     }
   },
