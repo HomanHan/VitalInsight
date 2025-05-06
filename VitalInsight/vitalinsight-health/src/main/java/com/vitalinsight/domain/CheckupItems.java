@@ -21,7 +21,6 @@ import io.swagger.annotations.ApiModelProperty;
 import cn.hutool.core.bean.copier.CopyOptions;
 import java.sql.Timestamp;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -30,7 +29,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 /**
 * @description /
 * @author VitalInsight Team
-* @date 2025-05-05
+* @date 2025-05-07
 **/
 @Data
 @TableName("Checkup_Items")
@@ -39,10 +38,6 @@ public class CheckupItems implements Serializable {
     @TableId(value = "item_id", type = IdType.AUTO)
     @ApiModelProperty(value = "体检项目唯一标识符")
     private Long itemId;
-
-    @NotNull
-    @ApiModelProperty(value = "体检报告ID（外键，关联体检报告表）")
-    private Long reportId;
 
     @NotBlank
     @ApiModelProperty(value = "体检项目名称（如身高、体重）")
@@ -61,6 +56,9 @@ public class CheckupItems implements Serializable {
 
     @ApiModelProperty(value = "记录最后更新时间")
     private Timestamp updatedAt;
+
+    @ApiModelProperty(value = "用户ID（外键，关联用户表）")
+    private Long userId;
 
     public void copy(CheckupItems source){
         BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));

@@ -4,16 +4,8 @@
     <div class="head-container">
       <div v-if="crud.props.searchToggle">
         <!-- 搜索 -->
-        <label class="el-form-item-label">体检报告 ID</label>
-        <el-input v-model="query.reportId" clearable placeholder="体检报告 ID" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">体检项目名称（如身高、体重）</label>
         <el-input v-model="query.itemName" clearable placeholder="如身高、体重" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <!--        <date-range-picker-->
-        <!--          v-model="query.updatedAt"-->
-        <!--          start-placeholder="updatedAtStart"-->
-        <!--          end-placeholder="updatedAtStart"-->
-        <!--          class="date-item"-->
-        <!--        />-->
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
@@ -21,9 +13,6 @@
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="120px">
-          <el-form-item label="体检报告 ID" prop="reportId">
-            <el-input v-model="form.reportId" style="width: 330px;" />
-          </el-form-item>
           <el-form-item label="体检项目名称" prop="itemName">
             <el-select v-model="form.itemName" filterable placeholder="请选择">
               <el-option
@@ -52,7 +41,6 @@
       <!--表格渲染-->
       <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="reportId" label="体检报告" />
         <el-table-column prop="itemName" label="体检项目">
           <template slot-scope="scope">
             {{ dict.label.体检项目[scope.row.itemName] }}
@@ -83,7 +71,7 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 
-const defaultForm = { itemId: null, reportId: null, itemName: null, itemValue: null, referenceRange: null, createdAt: null, updatedAt: null }
+const defaultForm = { itemId: null, itemName: null, itemValue: null, referenceRange: null, createdAt: null, updatedAt: null, userId: null }
 export default {
   name: 'CheckupItems',
   components: { pagination, crudOperation, rrOperation, udOperation },
@@ -95,9 +83,6 @@ export default {
   data() {
     return {
       rules: {
-        reportId: [
-          { required: true, message: '体检报告 ID 不能为空', trigger: 'blur' }
-        ],
         itemName: [
           { required: true, message: '体检项目名称不能为空', trigger: 'blur' }
         ],
@@ -109,7 +94,6 @@ export default {
         ]
       },
       queryTypeOptions: [
-        { key: 'reportId', display_name: '体检报告 ID' },
         { key: 'itemName', display_name: '如身高、体重' }
       ]
     }

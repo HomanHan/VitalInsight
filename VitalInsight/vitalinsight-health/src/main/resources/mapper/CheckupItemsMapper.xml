@@ -3,39 +3,29 @@
 <mapper namespace="com.vitalinsight.mapper.CheckupItemsMapper">
     <resultMap id="BaseResultMap" type="com.vitalinsight.domain.CheckupItems">
         <id column="item_id" property="itemId"/>
-        <result column="report_id" property="reportId"/>
         <result column="item_name" property="itemName"/>
         <result column="item_value" property="itemValue"/>
         <result column="reference_range" property="referenceRange"/>
         <result column="created_at" property="createdAt"/>
         <result column="updated_at" property="updatedAt"/>
+        <result column="user_id" property="userId"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        item_id, report_id, item_name, item_value, reference_range, created_at, updated_at
+        item_id, item_name, item_value, reference_range, created_at, updated_at, user_id
     </sql>
 
-<!-- 按 criteria.userId 先在 Reports 表中查询相关报告 ID， 再做 Check_Items 的查询-->
     <select id="findAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from Checkup_Items
         <where>
-            report_id in (
-            select report_id
-            from Health_Reports
-            where user_id = #{criteria.userId}
-            )
-            <if test="criteria.reportId != null">
-                and report_id = #{criteria.reportId}
+            <if test="criteria.userId != null">
+                and user_id = #{criteria.userId}
             </if>
             <if test="criteria.itemName != null">
                 and item_name = #{criteria.itemName}
             </if>
-            <!-- Uncomment and modify the following if needed -->
-            <!-- <if test="criteria.updatedAt != null and criteria.updatedAt.size() > 0"> -->
-            <!--     AND updated_at BETWEEN #{criteria.updatedAt[0]} AND #{criteria.updatedAt[1]} -->
-            <!-- </if> -->
         </where>
         order by item_id desc
     </select>

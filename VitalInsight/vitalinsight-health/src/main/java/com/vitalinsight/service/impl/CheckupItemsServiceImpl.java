@@ -17,13 +17,13 @@ package com.vitalinsight.service.impl;
 
 import com.vitalinsight.domain.CheckupItems;
 import com.vitalinsight.utils.FileUtil;
+import com.vitalinsight.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vitalinsight.service.CheckupItemsService;
 import com.vitalinsight.domain.dto.CheckupItemsQueryCriteria;
 import com.vitalinsight.mapper.CheckupItemsMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.vitalinsight.utils.PageUtil;
@@ -34,12 +34,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import com.vitalinsight.utils.PageResult;
-import com.vitalinsight.utils.SecurityUtils;
 
 /**
 * @description 服务实现
 * @author VitalInsight Team
-* @date 2025-05-05
+* @date 2025-05-07
 **/
 @Service
 @RequiredArgsConstructor
@@ -62,6 +61,7 @@ public class CheckupItemsServiceImpl extends ServiceImpl<CheckupItemsMapper, Che
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(CheckupItems resources) {
+        resources.setUserId(SecurityUtils.getCurrentUserId());
         checkupItemsMapper.insert(resources);
     }
 
@@ -84,12 +84,12 @@ public class CheckupItemsServiceImpl extends ServiceImpl<CheckupItemsMapper, Che
         List<Map<String, Object>> list = new ArrayList<>();
         for (CheckupItems checkupItems : all) {
             Map<String,Object> map = new LinkedHashMap<>();
-            map.put("体检报告ID（外键，关联体检报告表）", checkupItems.getReportId());
-            map.put("体检项目名称（如身高、体重）", checkupItems.getItemName());
-            map.put("体检项目值（如175 cm）", checkupItems.getItemValue());
-            map.put("正常参考值范围", checkupItems.getReferenceRange());
-            map.put("记录创建时间", checkupItems.getCreatedAt());
-            map.put("记录最后更新时间", checkupItems.getUpdatedAt());
+            map.put("体检项目名称", checkupItems.getItemName());
+            map.put("体检项目值", checkupItems.getItemValue());
+            map.put("参考范围", checkupItems.getReferenceRange());
+            map.put("创建时间", checkupItems.getCreatedAt());
+            map.put("最后更新时间", checkupItems.getUpdatedAt());
+            map.put("用户ID", checkupItems.getUserId());
             list.add(map);
         }
         FileUtil.downloadExcel(list, response);

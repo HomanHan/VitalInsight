@@ -26,7 +26,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
 * @author VitalInsight Team
-* @date 2025-05-05
+* @date 2025-05-07
 **/
 @Mapper
 public interface CheckupItemsMapper extends BaseMapper<CheckupItems> {

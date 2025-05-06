@@ -16,13 +16,11 @@
 package com.vitalinsight.domain.dto;
 
 import lombok.Data;
-import java.sql.Timestamp;
-import java.util.List;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
 * @author VitalInsight Team
-* @date 2025-05-05
+* @date 2025-05-07
 **/
 @Data
 public class CheckupItemsQueryCriteria{
@@ -33,15 +31,10 @@ public class CheckupItemsQueryCriteria{
     @ApiModelProperty(value = "每页数据量", example = "10")
     private Integer size = 10;
 
-    @ApiModelProperty(value = "体检报告ID（外键，关联体检报告表）")
-    private Long reportId;
-
     @ApiModelProperty(value = "体检项目名称（如身高、体重）")
     private String itemName;
 
     // 当前登陆的用户 ID，后续或许可以增加亲友 ID 用以实现亲友关系
     @ApiModelProperty(value = "查询的用户 ID")
     private Long userId;
-
-//    private List<Timestamp> updatedAt;
 }
