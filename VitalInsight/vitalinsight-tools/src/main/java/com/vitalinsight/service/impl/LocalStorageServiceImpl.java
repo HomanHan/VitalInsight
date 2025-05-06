@@ -86,6 +86,38 @@ public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Loc
         }
     }
 
+    // 上传文件 with 机构名称 and userid
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public LocalStorage createOrg(String name, String orgName, MultipartFile multipartFile) {
+        FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
+        String suffix = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
+        String type = FileUtil.getFileType(suffix);
+        File file = FileUtil.upload(multipartFile, properties.getPath().getPath() + type +  File.separator);
+        if(ObjectUtil.isNull(file)){
+            throw new BadRequestException("上传失败");
+        }
+        try {
+            name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
+            Long userid = SecurityUtils.getCurrentUserId();
+            LocalStorage localStorage = new LocalStorage(
+                    userid,
+                    orgName,
+                    file.getName(),
+                    name,
+                    suffix,
+                    file.getPath(),
+                    type,
+                    FileUtil.getSize(multipartFile.getSize())
+            );
+            save(localStorage);
+            return localStorage;
+        }catch (Exception e){
+            FileUtil.del(file);
+            throw e;
+        }
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(LocalStorage resources) {

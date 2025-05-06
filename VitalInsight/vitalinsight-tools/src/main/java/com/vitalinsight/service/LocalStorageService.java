@@ -56,6 +56,15 @@ public interface LocalStorageService extends IService<LocalStorage> {
     LocalStorage create(String name, MultipartFile file);
 
     /**
+     * 上传
+     * @param name 文件名称
+     * @param orgName 体检机构名称
+     * @param file 文件
+     * @return /
+     */
+    LocalStorage createOrg(String name, String orgName, MultipartFile file);
+
+    /**
      * 编辑
      * @param resources 文件信息
      */

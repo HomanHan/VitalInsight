@@ -16,6 +16,7 @@
 package com.vitalinsight.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,18 +27,28 @@ import com.vitalinsight.base.BaseEntity;
 import java.io.Serializable;
 
 /**
-* @author Zheng Jie
-* @date 2019-09-05
+* @author Vital Insight Team
+* @date 2025-05-07
 */
 @Getter
 @Setter
 @NoArgsConstructor
-@TableName("tool_local_storage")
+@TableName("Health_Reports")
 public class LocalStorage extends BaseEntity implements Serializable {
 
-    @TableId(value = "storage_id", type = IdType.AUTO)
+    @TableId(value = "report_id", type = IdType.AUTO)
     @ApiModelProperty(value = "ID", hidden = true)
     private Long id;
+
+    @ApiModelProperty(value = "用户ID")
+    // 绑定到数据库的 user_id 字段
+    @TableField(value = "user_id")
+    private Long userId;
+
+    @ApiModelProperty(value = "机构名称")
+    // 绑定到数据库的 institution_name 字段
+    @TableField(value = "institution_name")
+    private String orgName;
 
     @ApiModelProperty(value = "真实文件名")
     private String realName;
@@ -58,6 +69,17 @@ public class LocalStorage extends BaseEntity implements Serializable {
     private String size;
 
     public LocalStorage(String realName,String name, String suffix, String path, String type, String size) {
+        this.realName = realName;
+        this.name = name;
+        this.suffix = suffix;
+        this.path = path;
+        this.type = type;
+        this.size = size;
+    }
+
+    public LocalStorage(Long userid, String orgName, String realName,String name, String suffix, String path, String type, String size) {
+        this.userId = userid;
+        this.orgName = orgName;
         this.realName = realName;
         this.name = name;
         this.suffix = suffix;

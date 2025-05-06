@@ -28,6 +28,9 @@
         <el-form-item label="文件名">
           <el-input v-model="form.name" style="width: 370px;" />
         </el-form-item>
+        <el-form-item label="体检机构">
+          <el-input v-model="form.orgName" style="width: 370px;" />
+        </el-form-item>
         <!--   上传文件   -->
         <el-form-item v-if="crud.status.add" label="上传">
           <el-upload
@@ -38,7 +41,7 @@
             :headers="headers"
             :on-success="handleSuccess"
             :on-error="handleError"
-            :action="fileUploadApi + '?name=' + form.name"
+            :action="fileUploadApi + '?name=' + form.name + '&orgName=' + form.orgName"
           >
             <div class="VitalInsight-upload"><i class="el-icon-upload" /> 添加文件</div>
             <div slot="tip" class="el-upload__tip">可上传任意格式文件，且不超过100M</div>
@@ -111,7 +114,7 @@ import crudOperation from '@crud/CRUD.operation'
 import pagination from '@crud/Pagination'
 import DateRangePicker from '@/components/DateRangePicker'
 
-const defaultForm = { id: null, name: '' }
+const defaultForm = { id: null, name: '', orgName: '北京协和医院' }
 export default {
   components: { pagination, crudOperation, rrOperation, DateRangePicker },
   cruds() {

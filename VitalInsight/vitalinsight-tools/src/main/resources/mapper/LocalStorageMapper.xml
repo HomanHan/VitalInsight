@@ -3,7 +3,9 @@
 <mapper namespace="com.vitalinsight.mapper.LocalStorageMapper">
 
     <resultMap id="BaseResultMap" type="com.vitalinsight.domain.LocalStorage">
-        <id column="storage_id" property="id" jdbcType="BIGINT"/>
+        <id column="report_id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="institution_name" property="orgName" jdbcType="VARCHAR"/>
         <result column="real_name" property="realName" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="suffix" property="suffix" jdbcType="VARCHAR"/>
@@ -16,13 +18,13 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        storage_id, real_name, name, suffix, size, type, create_time, update_time, create_by, update_by
+        report_id, user_id, institution_name, real_name, name, suffix, size, type, create_time, update_time, create_by, update_by
     </sql>
 
     <select id="findAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tool_local_storage
+        from Health_Reports
         <where>
             <if test="criteria.blurry != null and criteria.blurry != ''">
                 AND (
@@ -36,6 +38,6 @@
                 AND update_time BETWEEN #{criteria.createTime[0]} AND #{criteria.createTime[1]}
             </if>
         </where>
-        ORDER BY storage_id DESC
+        ORDER BY report_id DESC
     </select>
 </mapper>
