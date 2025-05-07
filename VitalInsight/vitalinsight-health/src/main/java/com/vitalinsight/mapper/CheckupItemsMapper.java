@@ -31,6 +31,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 @Mapper
 public interface CheckupItemsMapper extends BaseMapper<CheckupItems> {
 
+    List<CheckupItems> findLatestHealthData(@Param("userId") Long userId);
+
     IPage<CheckupItems> findAll(@Param("criteria") CheckupItemsQueryCriteria criteria, Page<Object> page);
 
     List<CheckupItems> findAll(@Param("criteria") CheckupItemsQueryCriteria criteria);
