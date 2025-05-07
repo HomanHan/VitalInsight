@@ -33,6 +33,13 @@ import com.vitalinsight.utils.PageResult;
 public interface CheckupItemsService extends IService<CheckupItems> {
 
     /**
+     * 查询指定用户最新的身高、体重、血压、血糖数据
+     * @param userId 用户ID
+     * @return 最新健康数据列表
+     */
+    List<CheckupItems> getLatestHealthData(Long userId);
+
+    /**
     * 查询数据分页
     * @param criteria 条件
     * @param page 分页参数

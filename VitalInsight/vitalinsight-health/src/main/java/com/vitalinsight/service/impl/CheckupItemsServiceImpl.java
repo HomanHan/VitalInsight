@@ -47,6 +47,12 @@ public class CheckupItemsServiceImpl extends ServiceImpl<CheckupItemsMapper, Che
     private final CheckupItemsMapper checkupItemsMapper;
 
     @Override
+    @Transactional(readOnly = true)
+    public List<CheckupItems> getLatestHealthData(Long userId) {
+        return checkupItemsMapper.findLatestHealthData(userId);
+    }
+
+    @Override
     public PageResult<CheckupItems> queryAll(CheckupItemsQueryCriteria criteria, Page<Object> page){
         criteria.setUserId(SecurityUtils.getCurrentUserId());
         return PageUtil.toPage(checkupItemsMapper.findAll(criteria, page));

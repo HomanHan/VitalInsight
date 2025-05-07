@@ -44,6 +44,15 @@ public class CheckupItemsController {
 
     private final CheckupItemsService checkupItemsService;
 
+    @GetMapping("/latest")
+    @ApiOperation("获取指定用户最新的身高、体重、血压、血糖数据")
+
+    public ResponseEntity<List<CheckupItems>> getLatestHealthData(@RequestParam("userId") Long userId) {
+        System.out.println("Request received for userId: " + userId);
+        List<CheckupItems> latestHealthData = checkupItemsService.getLatestHealthData(userId);
+        return new ResponseEntity<>(latestHealthData, HttpStatus.OK);
+    }
+
     @ApiOperation("导出数据")
     @GetMapping(value = "/download")
 //    @PreAuthorize("@el.check('checkupItems:list')")
