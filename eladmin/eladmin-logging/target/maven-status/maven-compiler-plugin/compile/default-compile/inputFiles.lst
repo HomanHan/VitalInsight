@@ -1,8 +1,0 @@
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/service/impl/SysLogServiceImpl.java
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/service/SysLogService.java
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/rest/SysLogController.java
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/annotation/Log.java
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/mapper/SysLogMapper.java
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/aspect/LogAspect.java
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/domain/dto/SysLogQueryCriteria.java
-/Users/liyaodong/Documents/VitalInsight/eladmin/eladmin-logging/src/main/java/me/zhengjie/domain/SysLog.java
