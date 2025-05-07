@@ -44,5 +44,12 @@
             <artifactId>alipay-sdk-java</artifactId>
             <version>${alipay.version}</version>
         </dependency>
+
+        <!-- Tess4J -->
+        <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>5.5.0</version>
+        </dependency>
     </dependencies>
 </project>

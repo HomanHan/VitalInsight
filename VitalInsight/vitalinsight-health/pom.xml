@@ -13,12 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.vitalinsight</groupId>
-            <artifactId>VitalInsight-common</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vitalinsight</groupId>
-            <artifactId>VitalInsight-logging</artifactId>
+            <artifactId>VitalInsight-tools</artifactId>
             <version>1.1</version>
         </dependency>
     </dependencies>

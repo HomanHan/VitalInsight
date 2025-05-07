@@ -84,6 +84,7 @@
             <artifactId>oshi-core</artifactId>
             <version>6.6.5</version>
         </dependency>
+
     </dependencies>
 
     <!-- 打包 -->

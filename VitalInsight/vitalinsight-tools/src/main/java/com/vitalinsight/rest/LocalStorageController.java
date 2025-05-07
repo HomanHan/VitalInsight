@@ -16,6 +16,7 @@
 package com.vitalinsight.rest;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.vitalinsight.annotation.rest.AnonymousAccess;
 import lombok.RequiredArgsConstructor;
 import com.vitalinsight.annotation.Log;
 import com.vitalinsight.domain.LocalStorage;
@@ -49,6 +50,7 @@ public class LocalStorageController {
     @GetMapping
     @ApiOperation("查询文件")
     @PreAuthorize("@el.check('storage:list')")
+    @AnonymousAccess
     public ResponseEntity<PageResult<LocalStorage>> queryFile(LocalStorageQueryCriteria criteria){
         Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
         return new ResponseEntity<>(localStorageService.queryAll(criteria,page),HttpStatus.OK);
