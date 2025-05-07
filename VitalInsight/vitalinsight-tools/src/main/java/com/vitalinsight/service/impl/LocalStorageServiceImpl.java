@@ -38,9 +38,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 
 /**
-* @author Vital Insight Team
-* @date 2025-05-07
-*/
+ * @author Vital Insight Team
+ * @date 2025-05-07
+ */
 @Service
 @RequiredArgsConstructor
 public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, LocalStorage> implements LocalStorageService {

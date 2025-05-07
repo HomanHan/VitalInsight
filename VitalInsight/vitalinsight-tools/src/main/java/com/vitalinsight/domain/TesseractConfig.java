@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author: Vital Insight Team
- * @date: 2025-05-08
+ * @author Vital Insight Team
+ * @date 2025-05-08
  */
 @Configuration
 public class TesseractConfig {
