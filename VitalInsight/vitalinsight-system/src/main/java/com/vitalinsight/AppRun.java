@@ -25,10 +25,11 @@ import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.env.Environment;
 
 /**
- * @author Zheng Jie
- * @date 2018/11/15 9:20:19
+ * @author Vital Insight Team
+ * @date 2025-05-08
  */
 @Slf4j
 @RestController
@@ -42,11 +43,15 @@ public class AppRun {
         // 监控应用的PID，启动时可指定PID路径：--spring.pid.file=/home/VitalInsight/app.pid
         // 或者在 application.yml 添加文件路径，方便 kill，kill `cat /home/VitalInsight/app.pid`
         springApplication.addListeners(new ApplicationPidFileWriter());
-        springApplication.run(args);
+        Environment env = springApplication.run(args).getEnvironment();
+//        springApplication.run(args);
         log.info("---------------------------------------------");
         log.info("Local: {}", "http://localhost:8000");
         log.info("Swagger: {}", "http://localhost:8000/doc.html");
         log.info("---------------------------------------------");
+
+        log.info("Tess4j datapath: " + env.getProperty("tess4j.datapath"));
+
     }
 
     @Bean
