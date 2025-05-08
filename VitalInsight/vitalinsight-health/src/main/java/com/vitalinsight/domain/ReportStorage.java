@@ -15,15 +15,18 @@
  */
 package com.vitalinsight.domain;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
 import com.vitalinsight.base.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -34,7 +37,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @TableName("Health_Reports")
-public class LocalStorage extends BaseEntity implements Serializable {
+public class ReportStorage extends BaseEntity implements Serializable {
 
     @TableId(value = "report_id", type = IdType.AUTO)
     @ApiModelProperty(value = "ID", hidden = true)
@@ -68,7 +71,7 @@ public class LocalStorage extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "大小")
     private String size;
 
-    public LocalStorage(String realName,String name, String suffix, String path, String type, String size) {
+    public ReportStorage(String realName, String name, String suffix, String path, String type, String size) {
         this.realName = realName;
         this.name = name;
         this.suffix = suffix;
@@ -77,7 +80,7 @@ public class LocalStorage extends BaseEntity implements Serializable {
         this.size = size;
     }
 
-    public LocalStorage(Long userid, String orgName, String realName,String name, String suffix, String path, String type, String size) {
+    public ReportStorage(Long userid, String orgName, String realName, String name, String suffix, String path, String type, String size) {
         this.userId = userid;
         this.orgName = orgName;
         this.realName = realName;
@@ -88,7 +91,7 @@ public class LocalStorage extends BaseEntity implements Serializable {
         this.size = size;
     }
 
-    public void copy(LocalStorage source){
+    public void copy(ReportStorage source){
         BeanUtil.copyProperties(source,this, CopyOptions.create().setIgnoreNullValue(true));
     }
 }

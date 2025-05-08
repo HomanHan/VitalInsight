@@ -25,7 +25,7 @@ import java.util.List;
 * @date 2019-09-05
 */
 @Data
-public class LocalStorageQueryCriteria{
+public class ReportStorageQueryCriteria {
 
     @ApiModelProperty(value = "模糊查询")
     private String blurry;

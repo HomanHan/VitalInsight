@@ -19,17 +19,16 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vitalinsight.config.properties.FileProperties;
-import com.vitalinsight.domain.LocalStorage;
-import com.vitalinsight.domain.dto.LocalStorageQueryCriteria;
 import com.vitalinsight.exception.BadRequestException;
-import com.vitalinsight.mapper.LocalStorageMapper;
 import com.vitalinsight.service.ReportStorageService;
 import com.vitalinsight.utils.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.vitalinsight.domain.ReportStorage;
+import com.vitalinsight.domain.dto.ReportStorageQueryCriteria;
+import com.vitalinsight.mapper.ReportStorageMapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -44,24 +43,24 @@ import java.util.Map;
  */
 @Service
 @RequiredArgsConstructor
-public class ReportStorageServiceImpl extends ServiceImpl<LocalStorageMapper, LocalStorage> implements ReportStorageService {
+public class ReportStorageServiceImpl extends ServiceImpl<ReportStorageMapper, ReportStorage> implements ReportStorageService {
 
-    private final LocalStorageMapper localStorageMapper;
+    private final ReportStorageMapper reportStorageMapper;
     private final FileProperties properties;
 
     @Override
-    public PageResult<LocalStorage> queryAll(LocalStorageQueryCriteria criteria, Page<Object> page){
-        return PageUtil.toPage(localStorageMapper.findAll(criteria, page));
+    public PageResult<ReportStorage> queryAll(ReportStorageQueryCriteria criteria, Page<Object> page){
+        return PageUtil.toPage(reportStorageMapper.findAll(criteria, page));
     }
 
     @Override
-    public List<LocalStorage> queryAll(LocalStorageQueryCriteria criteria){
-        return localStorageMapper.findAll(criteria);
+    public List<ReportStorage> queryAll(ReportStorageQueryCriteria criteria){
+        return reportStorageMapper.findAll(criteria);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public LocalStorage create(String name, MultipartFile multipartFile) {
+    public ReportStorage create(String name, MultipartFile multipartFile) {
         FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
         String suffix = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
         String type = FileUtil.getFileType(suffix);
@@ -71,7 +70,7 @@ public class ReportStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Lo
         }
         try {
             name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
-            LocalStorage localStorage = new LocalStorage(
+            ReportStorage localStorage = new ReportStorage(
                     file.getName(),
                     name,
                     suffix,
@@ -90,7 +89,7 @@ public class ReportStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Lo
     // 上传文件 with 机构名称 and userid
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public LocalStorage createOrg(String name, String orgName, MultipartFile multipartFile) {
+    public ReportStorage createOrg(String name, String orgName, MultipartFile multipartFile) {
         FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
         String suffix = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
         String type = FileUtil.getFileType(suffix);
@@ -101,7 +100,7 @@ public class ReportStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Lo
         try {
             name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
             Long userid = SecurityUtils.getCurrentUserId();
-            LocalStorage localStorage = new LocalStorage(
+            ReportStorage localStorage = new ReportStorage(
                     userid,
                     orgName,
                     file.getName(),
@@ -121,8 +120,8 @@ public class ReportStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Lo
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(LocalStorage resources) {
-        LocalStorage localStorage = getById(resources.getId());
+    public void update(ReportStorage resources) {
+        ReportStorage localStorage = getById(resources.getId());
         localStorage.copy(resources);
         saveOrUpdate(localStorage);
     }
@@ -131,16 +130,16 @@ public class ReportStorageServiceImpl extends ServiceImpl<LocalStorageMapper, Lo
     @Transactional(rollbackFor = Exception.class)
     public void deleteAll(Long[] ids) {
         for (Long id : ids) {
-            LocalStorage storage = getById(id);
+            ReportStorage storage = getById(id);
             FileUtil.del(storage.getPath());
             removeById(storage);
         }
     }
 
     @Override
-    public void download(List<LocalStorage> queryAll, HttpServletResponse response) throws IOException {
+    public void download(List<ReportStorage> queryAll, HttpServletResponse response) throws IOException {
         List<Map<String, Object>> list = new ArrayList<>();
-        for (LocalStorage localStorage : queryAll) {
+        for (ReportStorage localStorage : queryAll) {
             Map<String,Object> map = new LinkedHashMap<>();
             map.put("文件名", localStorage.getRealName());
             map.put("备注名", localStorage.getName());

@@ -24,12 +24,6 @@
             <version>1.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.vitalinsight</groupId>
-            <artifactId>VitalInsight-health</artifactId>
-            <version>1.1</version>
-        </dependency>
-
         <!--邮件依赖-->
         <dependency>
             <groupId>javax.mail</groupId>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vitalinsight.mapper.LocalStorageMapper">
+<mapper namespace="com.vitalinsight.mapper.ReportStorageMapper">
 
-    <resultMap id="BaseResultMap" type="com.vitalinsight.domain.LocalStorage">
+    <resultMap id="BaseResultMap" type="com.vitalinsight.domain.ReportStorage">
         <id column="report_id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="institution_name" property="orgName" jdbcType="VARCHAR"/>

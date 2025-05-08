@@ -18,10 +18,10 @@ package com.vitalinsight.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.vitalinsight.domain.LocalStorage;
-import com.vitalinsight.domain.dto.LocalStorageQueryCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import com.vitalinsight.domain.ReportStorage;
+import com.vitalinsight.domain.dto.ReportStorageQueryCriteria;
 import java.util.List;
 
 /**
@@ -30,9 +30,9 @@ import java.util.List;
  * @date 2023-06-14
  **/
 @Mapper
-public interface LocalStorageMapper extends BaseMapper<LocalStorage> {
+public interface ReportStorageMapper extends BaseMapper<ReportStorage> {
 
-    IPage<LocalStorage> findAll(@Param("criteria") LocalStorageQueryCriteria criteria, Page<Object> page);
+    IPage<ReportStorage> findAll(@Param("criteria") ReportStorageQueryCriteria criteria, Page<Object> page);
 
-    List<LocalStorage> findAll(@Param("criteria") LocalStorageQueryCriteria criteria);
+    List<ReportStorage> findAll(@Param("criteria") ReportStorageQueryCriteria criteria);
 }

@@ -17,11 +17,10 @@ package com.vitalinsight.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.vitalinsight.domain.LocalStorage;
-import com.vitalinsight.domain.dto.LocalStorageQueryCriteria;
 import com.vitalinsight.utils.PageResult;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.vitalinsight.domain.ReportStorage;
+import com.vitalinsight.domain.dto.ReportStorageQueryCriteria;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +29,7 @@ import java.util.List;
  * @author Vital Insight Team
  * @date 2025-05-08
  */
-public interface ReportStorageService extends IService<LocalStorage> {
+public interface ReportStorageService extends IService<ReportStorage> {
 
     /**
      * 分页查询
@@ -39,14 +38,14 @@ public interface ReportStorageService extends IService<LocalStorage> {
      * @param page     分页参数
      * @return /
      */
-    PageResult<LocalStorage> queryAll(LocalStorageQueryCriteria criteria, Page<Object> page);
+    PageResult<ReportStorage> queryAll(ReportStorageQueryCriteria criteria, Page<Object> page);
 
     /**
      * 查询全部数据
      * @param criteria 条件
      * @return /
      */
-    List<LocalStorage> queryAll(LocalStorageQueryCriteria criteria);
+    List<ReportStorage> queryAll(ReportStorageQueryCriteria criteria);
 
     /**
      * 上传
@@ -54,7 +53,7 @@ public interface ReportStorageService extends IService<LocalStorage> {
      * @param file 文件
      * @return /
      */
-    LocalStorage create(String name, MultipartFile file);
+    ReportStorage create(String name, MultipartFile file);
 
     /**
      * 上传
@@ -63,13 +62,13 @@ public interface ReportStorageService extends IService<LocalStorage> {
      * @param file 文件
      * @return /
      */
-    LocalStorage createOrg(String name, String orgName, MultipartFile file);
+    ReportStorage createOrg(String name, String orgName, MultipartFile file);
 
     /**
      * 编辑
      * @param resources 文件信息
      */
-    void update(LocalStorage resources);
+    void update(ReportStorage resources);
 
     /**
      * 多选删除
@@ -83,5 +82,5 @@ public interface ReportStorageService extends IService<LocalStorage> {
      * @param response /
      * @throws IOException /
      */
-    void download(List<LocalStorage> localStorages, HttpServletResponse response) throws IOException;
+    void download(List<ReportStorage> localStorages, HttpServletResponse response) throws IOException;
 }
