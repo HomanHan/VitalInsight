@@ -77,3 +77,4 @@ rsa:
 
 tess4j:
   datapath: ${user.dir}/tessdata
+  lang: chi_sim+eng

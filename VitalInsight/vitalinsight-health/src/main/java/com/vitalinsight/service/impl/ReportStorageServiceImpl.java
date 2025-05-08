@@ -18,24 +18,25 @@ package com.vitalinsight.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.RequiredArgsConstructor;
 import com.vitalinsight.config.properties.FileProperties;
 import com.vitalinsight.domain.LocalStorage;
 import com.vitalinsight.domain.dto.LocalStorageQueryCriteria;
 import com.vitalinsight.exception.BadRequestException;
 import com.vitalinsight.mapper.LocalStorageMapper;
-import com.vitalinsight.utils.*;
 import com.vitalinsight.service.ReportStorageService;
+import com.vitalinsight.utils.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Vital Insight Team
@@ -43,7 +44,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Service
 @RequiredArgsConstructor
-public class LocalStorageServiceImpl extends ServiceImpl<LocalStorageMapper, LocalStorage> implements ReportStorageService {
+public class ReportStorageServiceImpl extends ServiceImpl<LocalStorageMapper, LocalStorage> implements ReportStorageService {
 
     private final LocalStorageMapper localStorageMapper;
     private final FileProperties properties;

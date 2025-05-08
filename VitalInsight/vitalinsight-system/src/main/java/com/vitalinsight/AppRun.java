@@ -48,9 +48,8 @@ public class AppRun {
         log.info("---------------------------------------------");
         log.info("Local: {}", "http://localhost:8000");
         log.info("Swagger: {}", "http://localhost:8000/doc.html");
-        log.info("---------------------------------------------");
-
         log.info("Tess4j datapath: " + env.getProperty("tess4j.datapath"));
+        log.info("---------------------------------------------");
 
     }
 

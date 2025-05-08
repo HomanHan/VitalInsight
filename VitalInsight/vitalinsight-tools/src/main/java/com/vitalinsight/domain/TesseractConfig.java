@@ -15,6 +15,9 @@ public class TesseractConfig {
     @Value("${tess4j.datapath}")
     private String dataPath;
 
+    @Value("${tess4j.lang}")
+    private String lang;
+
     @Bean
     public Tesseract tesseract() {
 
@@ -22,7 +25,7 @@ public class TesseractConfig {
         // 设置训练数据文件夹路径
         tesseract.setDatapath(dataPath);
         // 设置为中文简体, 英文, 阿拉伯语
-        tesseract.setLanguage("chi_sim+eng+ara");
+        tesseract.setLanguage(lang);
         return tesseract;
     }
 }

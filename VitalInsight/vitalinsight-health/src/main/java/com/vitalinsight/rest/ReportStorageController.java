@@ -16,22 +16,24 @@
 package com.vitalinsight.rest;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.vitalinsight.annotation.rest.AnonymousAccess;
-import lombok.RequiredArgsConstructor;
 import com.vitalinsight.annotation.Log;
+import com.vitalinsight.annotation.rest.AnonymousAccess;
 import com.vitalinsight.domain.LocalStorage;
+import com.vitalinsight.domain.dto.LocalStorageQueryCriteria;
 import com.vitalinsight.exception.BadRequestException;
 import com.vitalinsight.service.ReportStorageService;
-import com.vitalinsight.domain.dto.LocalStorageQueryCriteria;
 import com.vitalinsight.utils.FileUtil;
 import com.vitalinsight.utils.PageResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -43,7 +45,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Api(tags = "工具：本地存储管理")
 @RequestMapping("/api/localStorage")
-public class LocalStorageController {
+public class ReportStorageController {
 
     private final ReportStorageService localStorageService;
 
