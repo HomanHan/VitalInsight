@@ -19,10 +19,12 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vitalinsight.config.properties.FileProperties;
+import com.vitalinsight.domain.CheckupItems;
 import com.vitalinsight.exception.BadRequestException;
 import com.vitalinsight.service.ReportStorageService;
 import com.vitalinsight.utils.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import com.vitalinsight.service.ParserService;
 
 /**
  * @author Vital Insight Team
@@ -47,6 +50,7 @@ public class ReportStorageServiceImpl extends ServiceImpl<ReportStorageMapper, R
 
     private final ReportStorageMapper reportStorageMapper;
     private final FileProperties properties;
+    private final ParserService parserService;
 
     @Override
     public PageResult<ReportStorage> queryAll(ReportStorageQueryCriteria criteria, Page<Object> page){
@@ -97,7 +101,18 @@ public class ReportStorageServiceImpl extends ServiceImpl<ReportStorageMapper, R
         if(ObjectUtil.isNull(file)){
             throw new BadRequestException("上传失败");
         }
+        List<CheckupItems> tempp;
         try {
+            tempp = parserService.parseReport(file);
+        } catch (Exception e) {
+            ResponseEntity.internalServerError().build();
+        }
+        try {
+            // 解析文件
+//            parserService.parseReport(file);
+            // 输出解析结果以供调试？
+//            System.out.println("解析结果: " + parserService.parseReport(file));
+
             name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
             Long userid = SecurityUtils.getCurrentUserId();
             ReportStorage localStorage = new ReportStorage(

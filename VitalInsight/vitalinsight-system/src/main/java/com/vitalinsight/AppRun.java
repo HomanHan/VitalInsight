@@ -50,6 +50,7 @@ public class AppRun {
         log.info("Swagger: {}", "http://localhost:8000/doc.html");
         log.info("Tess4j datapath: " + env.getProperty("tess4j.datapath"));
         log.info("---------------------------------------------");
+        System.setProperty("jna.library.path", env.getProperty("tess4j.libpath"));
 
     }
 

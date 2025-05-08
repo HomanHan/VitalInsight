@@ -2,6 +2,7 @@ package com.vitalinsight.service.impl;
 
 import com.alipay.api.internal.util.file.IOUtils;
 import com.vitalinsight.domain.CheckupItems;
+import com.vitalinsight.service.ParserService;
 import net.sourceforge.tess4j.Tesseract;
 import lombok.RequiredArgsConstructor;
 import net.sourceforge.tess4j.TesseractException;
@@ -19,7 +20,7 @@ import java.io.File;
 
 @Service
 @RequiredArgsConstructor
-public class ReportParser {
+public class ReportParser implements ParserService {
     private final Tesseract tesseract;
 
     public List<CheckupItems> parseMultiReport(MultipartFile multipartFile) throws TesseractException, IOException {
