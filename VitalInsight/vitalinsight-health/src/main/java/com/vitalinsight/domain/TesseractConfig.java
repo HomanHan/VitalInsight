@@ -26,6 +26,9 @@ public class TesseractConfig {
         tesseract.setDatapath(dataPath);
         // 设置为中文简体, 英文, 阿拉伯语
         tesseract.setLanguage(lang);
+        tesseract.setPageSegMode(3);    // PSM_AUTO 全自动页面分割
+        tesseract.setOcrEngineMode(1);  // OEM_LSTM_ONLY 使用LSTM引擎
+        tesseract.setVariable("preserve_interword_spaces", "1");
         return tesseract;
     }
 }
