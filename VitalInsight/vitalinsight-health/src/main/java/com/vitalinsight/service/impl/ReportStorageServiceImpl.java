@@ -72,6 +72,13 @@ public class ReportStorageServiceImpl extends ServiceImpl<ReportStorageMapper, R
         if(ObjectUtil.isNull(file)){
             throw new BadRequestException("上传失败");
         }
+
+        try {   // 解析文件
+            parserService.parseReport(file);
+        } catch (Exception e) {
+            ResponseEntity.internalServerError().build();
+        }
+
         try {
             name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
             ReportStorage localStorage = new ReportStorage(
@@ -101,18 +108,14 @@ public class ReportStorageServiceImpl extends ServiceImpl<ReportStorageMapper, R
         if(ObjectUtil.isNull(file)){
             throw new BadRequestException("上传失败");
         }
-        List<CheckupItems> tempp;
-        try {
-            tempp = parserService.parseReport(file);
+
+        try {   // 解析文件
+            parserService.parseReport(file);
         } catch (Exception e) {
             ResponseEntity.internalServerError().build();
         }
-        try {
-            // 解析文件
-//            parserService.parseReport(file);
-            // 输出解析结果以供调试？
-//            System.out.println("解析结果: " + parserService.parseReport(file));
 
+        try {
             name = StringUtils.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
             Long userid = SecurityUtils.getCurrentUserId();
             ReportStorage localStorage = new ReportStorage(

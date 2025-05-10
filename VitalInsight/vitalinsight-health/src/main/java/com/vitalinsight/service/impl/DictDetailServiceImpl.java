@@ -13,19 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.service.impl;
+package com.vitalinsight.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
-import com.vitalinsight.modules.system.domain.Dict;
-import com.vitalinsight.modules.system.domain.DictDetail;
-import com.vitalinsight.modules.system.mapper.DictMapper;
-import com.vitalinsight.modules.system.domain.dto.DictDetailQueryCriteria;
+import com.vitalinsight.domain.Dict;
+import com.vitalinsight.domain.DictDetail;
+import com.vitalinsight.mapper.DictMapper;
+import com.vitalinsight.domain.dto.DictDetailQueryCriteria;
 import com.vitalinsight.utils.*;
-import com.vitalinsight.modules.system.mapper.DictDetailMapper;
-import com.vitalinsight.modules.system.service.DictDetailService;
+import com.vitalinsight.mapper.DictDetailMapper;
+import com.vitalinsight.service.DictDetailService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -91,5 +91,11 @@ public class DictDetailServiceImpl extends ServiceImpl<DictDetailMapper, DictDet
     public void delCaches(DictDetail dictDetail){
         Dict dict = dictMapper.selectById(dictDetail.getDictId());
         redisUtils.del(CacheKey.DICT_NAME + dict.getName());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean existsByNameAndId(String name, Long dictId) {
+        return !(dictDetailMapper.findByDictIdAndLabel(dictId, name).isEmpty());
     }
 }

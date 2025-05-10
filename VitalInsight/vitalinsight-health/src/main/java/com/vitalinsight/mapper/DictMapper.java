@@ -13,28 +13,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.mapper;
+package com.vitalinsight.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.vitalinsight.modules.system.domain.DictDetail;
-import com.vitalinsight.modules.system.domain.dto.DictDetailQueryCriteria;
+import com.vitalinsight.domain.Dict;
+import com.vitalinsight.domain.dto.DictQueryCriteria;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
-import java.util.Set;
 
 /**
 * @author Zheng Jie
 * @date 2023-06-19
 */
 @Mapper
-public interface DictDetailMapper extends BaseMapper<DictDetail> {
+public interface DictMapper extends BaseMapper<Dict> {
 
-    List<DictDetail> findByDictName(@Param("name") String name);
+    IPage<Dict> findAll(@Param("criteria") DictQueryCriteria criteria, Page<Object> page);
 
-    IPage<DictDetail> findAll(@Param("criteria") DictDetailQueryCriteria criteria, Page<Object> page);
-
-    void deleteByDictBatchIds(@Param("dictIds") Set<Long> dictIds);
+    List<Dict> findAll(@Param("criteria") DictQueryCriteria criteria);
 }

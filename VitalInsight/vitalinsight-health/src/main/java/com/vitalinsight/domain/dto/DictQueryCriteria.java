@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.domain.dto;
+package com.vitalinsight.domain.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

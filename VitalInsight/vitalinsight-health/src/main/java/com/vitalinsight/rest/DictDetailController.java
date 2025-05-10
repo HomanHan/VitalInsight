@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.rest;
+package com.vitalinsight.rest;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -21,9 +21,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import com.vitalinsight.annotation.Log;
 import com.vitalinsight.exception.BadRequestException;
-import com.vitalinsight.modules.system.domain.DictDetail;
-import com.vitalinsight.modules.system.service.DictDetailService;
-import com.vitalinsight.modules.system.domain.dto.DictDetailQueryCriteria;
+import com.vitalinsight.domain.DictDetail;
+import com.vitalinsight.service.DictDetailService;
+import com.vitalinsight.domain.dto.DictDetailQueryCriteria;
 import com.vitalinsight.utils.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -13,20 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.service.impl;
+package com.vitalinsight.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
-import com.vitalinsight.modules.system.domain.Dict;
-import com.vitalinsight.modules.system.domain.DictDetail;
-import com.vitalinsight.modules.system.mapper.DictDetailMapper;
-import com.vitalinsight.modules.system.domain.dto.DictQueryCriteria;
+import com.vitalinsight.domain.Dict;
+import com.vitalinsight.domain.DictDetail;
+import com.vitalinsight.mapper.DictDetailMapper;
+import com.vitalinsight.domain.dto.DictQueryCriteria;
 import com.vitalinsight.utils.*;
-import com.vitalinsight.modules.system.mapper.DictMapper;
-import com.vitalinsight.modules.system.service.DictService;
+import com.vitalinsight.mapper.DictMapper;
+import com.vitalinsight.service.DictService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;

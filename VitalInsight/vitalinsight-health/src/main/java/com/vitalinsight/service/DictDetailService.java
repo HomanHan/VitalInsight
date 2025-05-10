@@ -13,12 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.service;
+package com.vitalinsight.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.vitalinsight.modules.system.domain.DictDetail;
-import com.vitalinsight.modules.system.domain.dto.DictDetailQueryCriteria;
+import com.vitalinsight.domain.DictDetail;
+import com.vitalinsight.domain.dto.DictDetailQueryCriteria;
 import com.vitalinsight.utils.PageResult;
 
 import java.util.List;
@@ -62,4 +62,12 @@ public interface DictDetailService extends IService<DictDetail> {
      * @return /
      */
     List<DictDetail> getDictByName(String name);
+
+    /**
+     * 根据字典名称 和 字典 ID 搜索是否存在该项
+     * @param name 字典名称
+     * @param dictId 字典 ID
+     * @return boolean
+     */
+    boolean existsByNameAndId(String name, Long dictId);
 }

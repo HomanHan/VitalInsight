@@ -8,24 +8,27 @@ import lombok.RequiredArgsConstructor;
 import net.sourceforge.tess4j.TesseractException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.awt.image.BufferedImage;
+import com.vitalinsight.service.CheckupItemsService;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.File;
-import javax.imageio.ImageIO;
+
+/**
+ * @author VitalInsight Team
+ * @date 2025-05-10
+ */
 
 @Service
 @RequiredArgsConstructor
 public class ReportParser implements ParserService {
     private final Tesseract tesseract;
+    private final CheckupItemsService checkupItemsService;
 
     public List<CheckupItems> parseMultiReport(MultipartFile multipartFile) throws TesseractException, IOException {
         File tempFile = File.createTempFile("temp", ".tmp");
@@ -75,7 +78,14 @@ public class ReportParser implements ParserService {
                     if (matcher.find()) {
                         CheckupItems item = new CheckupItems();
                         // 处理项目名称（还原连接符）
-                        item.setItemName(matcher.group("name").replace("—", "-"));
+                        String name = matcher.group("name").replace("—", "-")
+                                .replace("α", "α")
+                                .replace("β", "β")
+                                .replace("γ", "γ")
+                                .replace("δ", "δ")
+                                .replace("ε", "ε")
+                                .replace("ζ", "ζ")
+                                .replace("η", "η");;
 
                         // 处理结果（恢复单位分隔符）
                         String result = matcher.group("result").replace("|", " ").replace(",", ".");
@@ -83,11 +93,14 @@ public class ReportParser implements ParserService {
                         // 处理参考范围（恢复单位分隔符）
                         String ref = matcher.group("ref").replace("|", " ").replace("~", "-");
 
+                        // 单位，后续考虑是否加入 Checkup_Items 表
                         String unit = matcher.group("unit").replace("|", " ").replace("~", "-");
 
-                        result = result + " " + unit;
+                        item.setItemName(name);
                         item.setItemValue(result);
                         item.setReferenceRange(ref);
+                        checkupItemsService.create(item);
+
                         items.add(item);
                     }
                 });

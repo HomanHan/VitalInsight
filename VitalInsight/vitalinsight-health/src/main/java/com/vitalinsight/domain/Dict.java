@@ -13,16 +13,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.domain;
+package com.vitalinsight.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import com.vitalinsight.base.BaseEntity;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -32,28 +32,18 @@ import java.io.Serializable;
 */
 @Getter
 @Setter
-@TableName("sys_dict_detail")
-public class DictDetail extends BaseEntity implements Serializable {
+@TableName("sys_dict")
+public class Dict extends BaseEntity implements Serializable {
 
     @NotNull(groups = Update.class)
     @ApiModelProperty(value = "ID", hidden = true)
-    @TableId(value = "detail_id", type = IdType.AUTO)
+    @TableId(value = "dict_id", type = IdType.AUTO)
     private Long id;
 
-    @TableField(value = "dict_id")
-    @ApiModelProperty(hidden = true)
-    private Long dictId;
+    @NotBlank
+    @ApiModelProperty(value = "名称")
+    private String name;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "字典")
-    private Dict dict;
-
-    @ApiModelProperty(value = "字典标签")
-    private String label;
-
-    @ApiModelProperty(value = "字典值")
-    private String value;
-
-    @ApiModelProperty(value = "排序")
-    private Integer dictSort = 999;
+    @ApiModelProperty(value = "描述")
+    private String description;
 }

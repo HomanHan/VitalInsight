@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vitalinsight.modules.system.mapper.DictDetailMapper">
-<resultMap id="BaseResultMap" type="com.vitalinsight.modules.system.domain.DictDetail">
+<mapper namespace="com.vitalinsight.mapper.DictDetailMapper">
+<resultMap id="BaseResultMap" type="com.vitalinsight.domain.DictDetail">
         <id column="detail_id" property="id" jdbcType="BIGINT"/>
         <result column="label" property="label" jdbcType="VARCHAR"/>
         <result column="value" property="value" jdbcType="VARCHAR"/>
@@ -10,7 +10,7 @@
         <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <association property="dict" javaType="com.vitalinsight.modules.system.domain.Dict">
+        <association property="dict" javaType="com.vitalinsight.domain.Dict">
             <id column="dict_id" property="id" jdbcType="BIGINT"/>
             <result column="name" property="name" jdbcType="VARCHAR"/>
         </association>
@@ -33,6 +33,20 @@
         order by dd.dict_sort, dd.dict_id desc
     </select>
 
+<!--    根据 dict_id 和 label 查找-->
+    <select id="findByDictIdAndLabel" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from sys_dict_detail dd, sys_dict d
+        where dd.dict_id = d.dict_id
+        <if test="dictId != null">
+            and d.dict_id = #{dictId}
+        </if>
+        <if test="label != null and label != ''">
+            and dd.label = #{label}
+        </if>
+        order by dd.dict_sort, dd.dict_id desc
+    </select>
+
     <select id="findByDictName" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from sys_dict_detail dd, sys_dict d
@@ -50,4 +64,6 @@
             #{item}
         </foreach>
     </delete>
+
+
 </mapper>

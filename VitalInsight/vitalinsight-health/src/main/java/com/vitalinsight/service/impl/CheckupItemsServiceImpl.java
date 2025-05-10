@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vitalinsight.service.CheckupItemsService;
 import com.vitalinsight.domain.dto.CheckupItemsQueryCriteria;
 import com.vitalinsight.mapper.CheckupItemsMapper;
+import com.vitalinsight.domain.Dict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.vitalinsight.utils.PageUtil;
@@ -34,6 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import com.vitalinsight.utils.PageResult;
+import com.vitalinsight.domain.DictDetail;
+import com.vitalinsight.service.DictDetailService;
 
 /**
 * @description 服务实现
@@ -45,6 +48,9 @@ import com.vitalinsight.utils.PageResult;
 public class CheckupItemsServiceImpl extends ServiceImpl<CheckupItemsMapper, CheckupItems> implements CheckupItemsService {
 
     private final CheckupItemsMapper checkupItemsMapper;
+    private final DictDetailService dictDetailService;
+    private Long dictId = 7L; // 体检项目的字典 ID
+    private String dictName = "体检项目"; // 体检项目的字典名称
 
     @Override
     @Transactional(readOnly = true)
@@ -68,6 +74,19 @@ public class CheckupItemsServiceImpl extends ServiceImpl<CheckupItemsMapper, Che
     @Transactional(rollbackFor = Exception.class)
     public void create(CheckupItems resources) {
         resources.setUserId(SecurityUtils.getCurrentUserId());
+        // 如果 itemName 不在 sys_dict 中，则加入
+        // 7 是体检项目的字典 ID
+        if (!dictDetailService.existsByNameAndId(resources.getItemName(), dictId)) {
+            DictDetail dictDetail = new DictDetail();
+            Dict tempdict = new Dict();
+            tempdict.setId(dictId);
+            tempdict.setName(dictName);
+            dictDetail.setDict(tempdict);
+            dictDetail.setLabel(resources.getItemName());
+            dictDetail.setValue(resources.getItemName());
+            dictDetail.setDictId(dictId);
+            dictDetailService.create(dictDetail);
+        }
         checkupItemsMapper.insert(resources);
     }
 

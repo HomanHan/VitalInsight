@@ -13,12 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.vitalinsight.modules.system.service;
+package com.vitalinsight.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.vitalinsight.modules.system.domain.Dict;
-import com.vitalinsight.modules.system.domain.dto.DictQueryCriteria;
+import com.vitalinsight.domain.Dict;
+import com.vitalinsight.domain.dto.DictQueryCriteria;
 import com.vitalinsight.utils.PageResult;
 
 import javax.servlet.http.HttpServletResponse;
