@@ -78,4 +78,4 @@ rsa:
 tess4j:
   datapath: ${user.dir}/tessdata
   lang: chi_sim+eng
-  libpath: /opt/homebrew/lib
+  libpath: /opt/homebrew/lib  # Path to your Tesseract library

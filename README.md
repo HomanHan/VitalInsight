@@ -1,13 +1,43 @@
 # VitalInsight
 
-### 项目简介
+## 项目简介
 一个基于 Spring Boot 2.7.18 、 Mybatis-Plus、 JWT、Spring Security、Redis、Vue 的前后端分离的 Web 系统
 
-### Notice ❗️❗️
+## Notice ❗️❗️
 
-- 注意修改 `VitalInsight/VitalInsight-system/src/main/resources/config/application-dev-template.yml` 配置文件中的数据库连接信息，然后改名为 `application-dev.yml`
+### Tesseract
 
-### 主要特性
+- 本项目**体检报告解析模块**依赖于`Tesseract-OCR`
+
+1. Install Tesseract-OCR
+
+- MacOS 用户可以使用 `Homebrew` 安装：
+
+```bash
+brew install tesseract
+```
+- Ubuntu 用户可以使用 `apt` 安装：
+
+```bash
+sudo apt install tesseract-ocr
+```
+
+2. Tesseract language data
+   
+本项目已经将**中英文**的语言数据放在了 `VitalInsight/tessdata` 目录下。如果您需要其他语言，请将对应的语言数据文件放在该目录下，并在`application.yml` 中的 `tesseract.lang` 属性中指定语言代码。
+
+3. Tesseract Library Path
+
+将库`libtesseract.dylib`路径添加到环境变量中。在 `application.yml` 中配置：
+
+```yaml
+tesseract:
+  libpath: /opt/homebrew/lib
+```
+
+  
+
+## 主要特性
 - 使用最新技术栈，社区资源丰富
 - 高效率开发，代码生成器可一键生成前后端代码
 - 支持数据字典，可方便地对一些状态进行管理
@@ -19,7 +49,7 @@
 - 支持在线用户管理与服务器性能监控，支持限制单用户登录
 - 支持运维管理，可方便地对远程服务器的应用进行部署与管理
 
-###  系统功能
+##  系统功能
 - 用户管理：提供用户的相关配置，新增用户后，默认密码为123456
 - 角色管理：对权限与菜单进行分配，可根据部门设置角色的数据权限
 - 菜单管理：已实现菜单动态路由，后端可配置化，支持多级菜单
@@ -36,7 +66,7 @@
 - 服务监控：监控服务器的负载情况
 - 运维管理：一键部署你的应用
 
-### 项目结构
+## 项目结构
 项目采用按功能分模块的开发方式，结构如下
 
 - `VitalInsight-common` 为系统的公共模块，各种工具类，公共配置存在该模块
@@ -49,7 +79,7 @@
 
 - `VitalInsight-generator` 为系统的代码生成模块，支持生成前后端CRUD代码
 
-### 详细结构
+## 详细结构
 
 ```
 - VitalInsight-common 公共模块
@@ -83,7 +113,7 @@
 - VitalInsight-generator 系统代码生成模块
 ```
 
-### 特别鸣谢
+## 特别鸣谢
 
 - 感谢 [PanJiaChen](https://github.com/PanJiaChen/vue-element-admin) 大佬提供的前端模板
 
