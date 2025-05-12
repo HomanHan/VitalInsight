@@ -46,7 +46,6 @@ public class CheckupItemsController {
 
     @GetMapping("/latest")
     @ApiOperation("获取指定用户最新的身高、体重、血压、血糖数据")
-
     public ResponseEntity<List<CheckupItems>> getLatestHealthData(@RequestParam("userId") Long userId) {
         System.out.println("Request received for userId: " + userId);
         List<CheckupItems> latestHealthData = checkupItemsService.getLatestHealthData(userId);

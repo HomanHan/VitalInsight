@@ -55,37 +55,61 @@
 
 <script>
 import axios from 'axios'
+import CountTo from 'vue-count-to'
+import jwt_decode from 'jwt-decode'
+import { getToken } from '@/utils/auth' // 引入 getToken 方法
 
 export default {
+  components: {
+    CountTo
+  },
   data() {
     return {
       data: {
-        height: '加载中...',
-        weights: '加载中...',
-        bloodpressure: '加载中...',
-        bloodsugars: '加载中...'
+        height: 0,
+        weights: 0,
+        bloodpressure: 0,
+        bloodsugars: 0
       },
-      userId: 1
+      userId: null // 初始 userId 设置为 null
     }
   },
   mounted() {
+    this.setUserId()
     this.fetchData()
   },
   methods: {
+    setUserId() {
+      const token = getToken()
+      if (token) {
+        try {
+          const decoded = jwt_decode(token)
+          console.log('JWT 解码内容:', decoded)
+          // 检查 JWT payload 中的字段名，调整字段名
+          this.userId = decoded.userId || decoded.id || decoded.user_id
+        } catch (error) {
+          console.error('解析 JWT 失败:', error)
+        }
+      }
+    },
     async fetchData() {
+      if (!this.userId) {
+        console.warn('无法获取 userId，未执行请求')
+        return
+      }
+
       try {
+        const token = getToken()
         const response = await axios.get('/api/checkupItems/latest', {
-          params: {
-            userId: this.userId
-          },
+          params: { userId: this.userId },
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU1ODk2NzY0OSwiaWF0IjoxNTU4OTQ2MDQ5fQ.jsJvqHa1tKbJazG0p9kq5J2tT7zAk5B6N_CspdOAQLWgEICStkMmvLE-qapFTtWnnDUPAjqmsmtPFSWYaH5LtA`
+            Authorization: `Bearer ${token}`
           }
         })
 
         const items = response.data
-        console.log(response.data) // 打印返回的数据
-        // 创建映射关系来更新数据
+
+        // 数据映射
         const dataMap = {
           身高: 'height',
           体重: 'weights',
@@ -93,12 +117,15 @@ export default {
           血糖: 'bloodsugars'
         }
 
-        // 遍历所有项并更新对应的值
+        // 更新数据并确保数据为数字格式
         items.forEach((item) => {
-          this.data[dataMap[item.itemName]] = item.itemValue
+          const key = dataMap[item.itemName]
+          if (key && !isNaN(item.itemValue)) {
+            this.data[key] = Number(item.itemValue)
+          }
         })
       } catch (error) {
-        console.error('获取数据失败:', error)
+        console.error('数据获取失败:', error)
       }
     },
     handleSetLineChartData(type) {
