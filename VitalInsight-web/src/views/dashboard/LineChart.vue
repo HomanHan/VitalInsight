@@ -1,30 +1,15 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div :class="className" :style="{ height: '100%', width: '100%' }" />
 </template>
 
 <script>
 import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
 
 export default {
-  mixins: [resize],
   props: {
     className: {
       type: String,
       default: 'chart'
-    },
-    width: {
-      type: String,
-      default: '100%'
-    },
-    height: {
-      type: String,
-      default: '350px'
-    },
-    autoResize: {
-      type: Boolean,
-      default: true
     },
     chartData: {
       type: Object,
@@ -38,98 +23,127 @@ export default {
   },
   watch: {
     chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val)
-      }
+      handler(newData) {
+        this.setOptions(newData)
+      },
+      deep: true
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.initChart()
-    })
+    this.initChart()
+    window.addEventListener('resize', this.resizeChart)
   },
   beforeDestroy() {
-    if (!this.chart) {
-      return
+    if (this.chart) {
+      this.chart.dispose()
     }
-    this.chart.dispose()
-    this.chart = null
+    window.removeEventListener('resize', this.resizeChart)
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
+      this.chart = echarts.init(this.$el)
       this.setOptions(this.chartData)
     },
-    setOptions({ expectedData, actualData } = {}) {
-      this.chart.setOption({
-        xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          boundaryGap: false,
-          axisTick: {
-            show: false
+    resizeChart() {
+      if (this.chart) {
+        this.chart.resize()
+      }
+    },
+    setOptions({ dates, values, systolicValues, diastolicValues, title, legend }) {
+      if (!this.chart) return
+
+      const isBloodPressure = title.includes('血压')
+
+      const series = isBloodPressure
+        ? [
+          {
+            name: '收缩压',
+            type: 'line',
+            smooth: true,
+            data: systolicValues,
+            itemStyle: {
+              color: '#ff6347'
+            },
+            areaStyle: {
+              color: '#ffe4e1'
+            }
+          },
+          {
+            name: '舒张压',
+            type: 'line',
+            smooth: true,
+            data: diastolicValues,
+            itemStyle: {
+              color: '#4682b4'
+            },
+            areaStyle: {
+              color: '#b0c4de'
+            }
           }
-        },
-        grid: {
-          left: 10,
-          right: 10,
-          bottom: 20,
-          top: 30,
-          containLabel: true
+        ]
+        : [
+          {
+            name: legend[0],
+            type: 'line',
+            smooth: true,
+            data: values,
+            itemStyle: {
+              color: '#3888fa'
+            },
+            areaStyle: {
+              color: '#f3f8ff'
+            }
+          }
+        ]
+
+      this.chart.setOption({
+        title: {
+          text: title,
+          left: 'center',
+          top: '10px',
+          textStyle: {
+            fontSize: 18,
+            fontWeight: 'bold'
+          }
         },
         tooltip: {
           trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          },
-          padding: [5, 10]
-        },
-        yAxis: {
-          axisTick: {
-            show: false
-          }
+          axisPointer: { type: 'line' }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: isBloodPressure ? ['收缩压', '舒张压'] : legend,
+          top: '50px',
+          left: 'center'
         },
-        series: [{
-          name: 'expected', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
+        grid: {
+          top: '80px',
+          left: '5%',
+          right: '5%',
+          bottom: '5%',
+          containLabel: true
         },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+        xAxis: {
+          type: 'category',
+          data: dates,
+          boundaryGap: false,
+          axisLabel: {
+            rotate: 45,
+            interval: 0
+          }
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series
       })
     }
   }
 }
 </script>
+
+<style scoped>
+.chart {
+  width: 100%;
+  height: 100%;
+}
+</style>

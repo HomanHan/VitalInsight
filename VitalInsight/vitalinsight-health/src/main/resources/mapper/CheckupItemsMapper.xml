@@ -24,8 +24,8 @@
         user_id = #{userId}
         AND item_name IN ('身高', '体重', '血压', '血糖')
         ORDER BY
-        created_at DESC
-        LIMIT 4
+        updated_at ASC
+        LIMIT 20
     </select>
 
     <select id="findAll" resultMap="BaseResultMap">
