@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vitalinsight.mapper.SysRelationshipsMapper">
+    <resultMap id="BaseResultMap" type="com.vitalinsight.domain.SysRelationships">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="related_user_id" property="relatedUserId"/>
+        <result column="relationship_type" property="relationshipType"/>
+        <result column="created_at" property="createdAt"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, related_user_id, relationship_type, created_at
+    </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_relationships
+        <where>
+            <if test="criteria.userId != null">
+                and user_id = #{criteria.userId}
+            </if>
+            <if test="criteria.relatedUserId != null">
+                and related_user_id = #{criteria.relatedUserId}
+            </if>
+            <if test="criteria.relationshipType != null">
+                and relationship_type like concat('%',#{criteria.relationshipType},'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+</mapper>
