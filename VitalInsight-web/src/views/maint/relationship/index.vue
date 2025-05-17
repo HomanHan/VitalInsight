@@ -11,7 +11,7 @@
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
-      <crudOperation :permission="permission" />
+      <crudOperation />
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
@@ -41,7 +41,6 @@
           <template slot-scope="scope">
             <udOperation
               :data="scope.row"
-              :permission="permission"
             />
           </template>
         </el-table-column>
@@ -70,11 +69,6 @@ export default {
   },
   data() {
     return {
-      permission: {
-        add: ['admin', 'sysRelationships:add'],
-        edit: ['admin', 'sysRelationships:edit'],
-        del: ['admin', 'sysRelationships:del']
-      },
       rules: {
         relatedUserId: [
           { required: true, message: '亲友用户ID不能为空', trigger: 'blur' }
