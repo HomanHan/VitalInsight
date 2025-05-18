@@ -50,7 +50,7 @@ public class ReportStorageController {
 
     @GetMapping
     @ApiOperation("查询文件")
-    @PreAuthorize("@el.check('storage:list')")
+//    @PreAuthorize("@el.check('storage:list')")
 //    @AnonymousAccess
     public ResponseEntity<PageResult<ReportStorage>> queryFile(ReportStorageQueryCriteria criteria){
         Page<Object> page = new Page<>(criteria.getPage(), criteria.getSize());
@@ -59,14 +59,14 @@ public class ReportStorageController {
 
     @ApiOperation("导出数据")
     @GetMapping(value = "/download")
-    @PreAuthorize("@el.check('storage:list')")
+//    @PreAuthorize("@el.check('storage:list')")
     public void exportFile(HttpServletResponse response, ReportStorageQueryCriteria criteria) throws IOException {
         reportStorageService.download(reportStorageService.queryAll(criteria), response);
     }
 
     @PostMapping
     @ApiOperation("上传文件")
-    @PreAuthorize("@el.check('storage:add')")
+//    @PreAuthorize("@el.check('storage:add')")
     public ResponseEntity<Object> createFile(@RequestParam String name, @RequestParam String orgName, @RequestParam("file") MultipartFile file){
         reportStorageService.createOrg(name, orgName, file);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -87,7 +87,7 @@ public class ReportStorageController {
     @PutMapping
     @Log("修改文件")
     @ApiOperation("修改文件")
-    @PreAuthorize("@el.check('storage:edit')")
+//    @PreAuthorize("@el.check('storage:edit')")
     public ResponseEntity<Object> updateFile(@Validated @RequestBody ReportStorage resources){
         reportStorageService.update(resources);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
