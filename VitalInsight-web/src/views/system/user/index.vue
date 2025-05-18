@@ -2,27 +2,27 @@
   <div class="app-container">
     <el-row :gutter="20">
       <!--侧边部门数据-->
-      <el-col :xs="9" :sm="6" :md="5" :lg="4" :xl="4">
-        <div class="head-container">
-          <el-input
-            v-model="deptName"
-            clearable
-            size="small"
-            placeholder="输入部门名称搜索"
-            prefix-icon="el-icon-search"
-            class="filter-item"
-            @input="getDeptDatas"
-          />
-        </div>
-        <el-tree
-          :data="deptDatas"
-          :load="getDeptDatas"
-          :props="defaultProps"
-          :expand-on-click-node="false"
-          lazy
-          @node-click="handleNodeClick"
-        />
-      </el-col>
+      <!--      <el-col :xs="9" :sm="6" :md="5" :lg="4" :xl="4">-->
+      <!--        <div class="head-container">-->
+      <!--          <el-input-->
+      <!--            v-model="deptName"-->
+      <!--            clearable-->
+      <!--            size="small"-->
+      <!--            placeholder="输入部门名称搜索"-->
+      <!--            prefix-icon="el-icon-search"-->
+      <!--            class="filter-item"-->
+      <!--            @input="getDeptDatas"-->
+      <!--          />-->
+      <!--        </div>-->
+      <!--        <el-tree-->
+      <!--          :data="deptDatas"-->
+      <!--          :load="getDeptDatas"-->
+      <!--          :props="defaultProps"-->
+      <!--          :expand-on-click-node="false"-->
+      <!--          lazy-->
+      <!--          @node-click="handleNodeClick"-->
+      <!--        />-->
+      <!--      </el-col>-->
       <!--用户数据-->
       <el-col :xs="15" :sm="18" :md="19" :lg="20" :xl="20">
         <!--工具栏-->
@@ -160,11 +160,11 @@
           <el-table-column prop="gender" label="性别" />
           <el-table-column :show-overflow-tooltip="true" prop="phone" width="100" label="电话" />
           <el-table-column :show-overflow-tooltip="true" width="135" prop="email" label="邮箱" />
-          <el-table-column :show-overflow-tooltip="true" prop="dept" label="部门">
-            <template slot-scope="scope">
-              <div>{{ scope.row.dept.name }}</div>
-            </template>
-          </el-table-column>
+          <!--          <el-table-column :show-overflow-tooltip="true" prop="dept" label="部门">-->
+          <!--            <template slot-scope="scope">-->
+          <!--              <div>{{ scope.row.dept.name }}</div>-->
+          <!--            </template>-->
+          <!--          </el-table-column>-->
           <el-table-column label="状态" align="center" prop="enabled">
             <template slot-scope="scope">
               <el-switch
