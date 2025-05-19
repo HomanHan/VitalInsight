@@ -8,11 +8,10 @@
         <date-range-picker v-model="query.createTime" class="date-item" />
         <rrOperation />
       </div>
-      <crudOperation :permission="permission">
+      <crudOperation>
         <!-- 新增 -->
         <el-button
           slot="left"
-          v-permission="['admin','storage:add']"
           class="filter-item"
           size="mini"
           type="primary"
@@ -125,11 +124,7 @@ export default {
     return {
       delAllLoading: false,
       loading: false,
-      headers: { 'Authorization': getToken() },
-      permission: {
-        edit: ['admin', 'storage:edit'],
-        del: ['admin', 'storage:del']
-      }
+      headers: { 'Authorization': getToken() }
     }
   },
   computed: {
