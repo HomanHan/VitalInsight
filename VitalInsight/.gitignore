@@ -8,4 +8,5 @@
 /.gradle/
 /application.pid
 **/application-dev.yml
+**/application-prod.yml
 dump.rdb
