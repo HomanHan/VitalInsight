@@ -20,6 +20,7 @@ import PanelGroup from './dashboard/PanelGroup'
 import LineChart from './dashboard/LineChart'
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
+import jwt_decode from 'jwt-decode'
 
 export default {
   name: 'Dashboard',
@@ -37,16 +38,32 @@ export default {
         title: '',
         legend: []
       },
-      userId: 1,
+      userId: null,
       loading: false,
       cachedData: {}
     }
   },
   mounted() {
-    this.handleSetLineChartData('height') // 初始化为身高曲线
+    this.setUserId()
+    if (this.userId) {
+      this.handleSetLineChartData('height')
+    }
   },
   methods: {
+    setUserId() {
+      const token = getToken()
+      if (token) {
+        try {
+          const decoded = jwt_decode(token)
+          this.userId = decoded.userId || decoded.id || decoded.user_id
+        } catch (error) {
+          console.error('JWT 解码失败:', error)
+        }
+      }
+    },
     async handleSetLineChartData(type) {
+      if (!this.userId) return
+
       if (this.cachedData[type]) {
         this.updateChartData(this.cachedData[type])
         return
