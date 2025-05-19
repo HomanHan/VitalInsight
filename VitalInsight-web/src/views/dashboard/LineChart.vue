@@ -135,7 +135,12 @@ export default {
           type: 'value'
         },
         series
-      })
+      },
+      {
+        notMerge: true,
+        replaceMerge: ['series', 'legend']
+      }
+      )
     }
   }
 }
