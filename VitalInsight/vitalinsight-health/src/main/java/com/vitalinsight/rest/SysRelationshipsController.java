@@ -19,6 +19,7 @@ import com.vitalinsight.annotation.Log;
 import com.vitalinsight.domain.SysRelationships;
 import com.vitalinsight.service.SysRelationshipsService;
 import com.vitalinsight.domain.dto.SysRelationshipsQueryCriteria;
+import com.vitalinsight.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -61,6 +62,7 @@ public class SysRelationshipsController {
     @Log("新增relationship")
     @ApiOperation("新增relationship")
     public ResponseEntity<Object> createSysRelationships(@Validated @RequestBody SysRelationships resources){
+        resources.setUserId(SecurityUtils.getCurrentUserId());
         sysRelationshipsService.create(resources);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
