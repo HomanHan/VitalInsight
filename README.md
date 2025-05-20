@@ -38,15 +38,13 @@ tesseract:
 ## 项目结构
 项目采用按功能分模块的开发方式，结构如下
 
-- `VitalInsight-common` 为系统的公共模块，各种工具类，公共配置存在该模块
+- `VitalInsight-common` 为系统的公共模块，各种工具类
 
-- `VitalInsight-system` 为系统核心模块也是项目入口模块，也是最终需要打包部署的模块
+- `VitalInsight-system` 为系统核心模块也是项目入口模块
 
-- `VitalInsight-logging` 为系统的日志模块，其他模块如果需要记录日志需要引入该模块
+- `VitalInsight-logging` 为系统的日志模块
 
-- `VitalInsight-tools` 为第三方工具模块，包含：邮件、七牛云存储、本地存储、支付宝
-
-- `VitalInsight-generator` 为系统的代码生成模块，支持生成前后端CRUD代码
+- `VitalInsight-tools` 为第三方工具模块
 
 - `VitalInsight-health` 为系统的健康体检模块，提供了体检报告的解析与展示
 
@@ -89,3 +87,5 @@ tesseract:
 - 感谢 [zhy6599](https://gitee.com/zhy6599) 大佬提供的后端运维管理相关功能
 
 - 感谢 [j.yao.SUSE](https://github.com/everhopingandwaiting) 大佬提供的匿名接口与Redis限流等功能
+
+- 感觉 [elunez](https://github.com/elunez) 原作者提供的整体框架构思
